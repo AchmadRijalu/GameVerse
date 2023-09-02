@@ -24,6 +24,9 @@
 		777E79902A983B4500F8E54D /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E798F2A983B4500F8E54D /* AboutView.swift */; };
 		777E79922A98886700F8E54D /* APIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E79912A98886700F8E54D /* APIRepository.swift */; };
 		777E79942A98887300F8E54D /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E79932A98887300F8E54D /* APIKey.swift */; };
+		77936B362AA3007A000D9CAD /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77936B352AA3007A000D9CAD /* SplashScreenView.swift */; };
+		77936B392AA305A3000D9CAD /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 77936B382AA305A3000D9CAD /* SwiftyJSON */; };
+		77936B3C2AA30674000D9CAD /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 77936B3B2AA30674000D9CAD /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,7 @@
 		777E798F2A983B4500F8E54D /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		777E79912A98886700F8E54D /* APIRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRepository.swift; sourceTree = "<group>"; };
 		777E79932A98887300F8E54D /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		77936B352AA3007A000D9CAD /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77936B3C2AA30674000D9CAD /* SDWebImageSwiftUI in Frameworks */,
+				77936B392AA305A3000D9CAD /* SwiftyJSON in Frameworks */,
 				77179DF12A94F58C00D11F85 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +166,7 @@
 				777E798B2A983ACA00F8E54D /* GameListView.swift */,
 				777E798D2A983AD400F8E54D /* GameDetailView.swift */,
 				777E798F2A983B4500F8E54D /* AboutView.swift */,
+				77936B352AA3007A000D9CAD /* SplashScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -231,6 +238,8 @@
 			name = GameVerse;
 			packageProductDependencies = (
 				77179DF02A94F58C00D11F85 /* Alamofire */,
+				77936B382AA305A3000D9CAD /* SwiftyJSON */,
+				77936B3B2AA30674000D9CAD /* SDWebImageSwiftUI */,
 			);
 			productName = GameVerse;
 			productReference = 77179DB92A94F14A00D11F85 /* GameVerse.app */;
@@ -307,6 +316,8 @@
 			packageReferences = (
 				77179DEF2A94F58C00D11F85 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				77179DF22A94F6CC00D11F85 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				77936B372AA305A3000D9CAD /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				77936B3A2AA30674000D9CAD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 77179DBA2A94F14A00D11F85 /* Products */;
 			projectDirPath = "";
@@ -361,6 +372,7 @@
 				7760FCA02A9F24DA007FFB76 /* GameListModel.swift in Sources */,
 				7760FCE02A9F6D82007FFB76 /* GameListItem.swift in Sources */,
 				77179DEB2A94F1A400D11F85 /* SharedValues.swift in Sources */,
+				77936B362AA3007A000D9CAD /* SplashScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,6 +719,22 @@
 				minimumVersion = 0.52.4;
 			};
 		};
+		77936B372AA305A3000D9CAD /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		77936B3A2AA30674000D9CAD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -719,6 +747,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 77179DF22A94F6CC00D11F85 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintPlugin";
+		};
+		77936B382AA305A3000D9CAD /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77936B372AA305A3000D9CAD /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		77936B3B2AA30674000D9CAD /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77936B3A2AA30674000D9CAD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

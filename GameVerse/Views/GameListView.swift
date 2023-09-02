@@ -27,7 +27,7 @@ struct GameListView: View {
     }.padding(.all).background(SwiftUI.Color("BackgroundColor"))
             .searchable(text: $searchText)
             .navigationTitle("Game List")
-.toolbar {ToolbarItem(placement: .navigationBarTrailing) { Image("photo").resizable().aspectRatio(contentMode: .fill).frame(width: 45, height: 45).cornerRadius(50)
+        .toolbar { ToolbarItem(placement: .navigationBarTrailing) { Image("photo").resizable().aspectRatio(contentMode: .fill).frame(width: 45, height: 45).cornerRadius(50)
             }
             }
     }.accentColor(SwiftUI.Color("SecondaryColor")).frame(maxWidth: .infinity, maxHeight: .infinity)

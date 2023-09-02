@@ -61,8 +61,43 @@ struct GameDetailView: View {
                         Spacer()
                     }.padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0))
                     VStack {
-                        Text("LAGU")
-                    }.frame(maxWidth: .infinity, maxHeight: 120).background(SwiftUI.Color("TabBarColor"))
+                        VStack{
+                            HStack{
+                                Text("Platform").font(.system(.title3)).bold()
+                                Spacer()
+                            }
+                            ScrollView(.horizontal){
+                                HStack{
+                                    Text("PC").padding(.trailing, 14)
+                                    Text("Playstation")
+                                }
+                            }
+                        }.padding(.bottom, 32)
+                        VStack{
+                            HStack{
+                                Text("Stores").font(.system(.title3)).bold()
+                                Spacer()
+                            }
+                            ScrollView(.horizontal){
+                                HStack{
+                                    Text("PC").padding(.trailing, 14)
+                                    Text("Playstation")
+                                }
+                            }
+                        }.padding(.bottom, 32)
+                        VStack{
+                            HStack{
+                                Text("Tags").font(.system(.title3)).bold()
+                                Spacer()
+                            }
+                            ScrollView(.horizontal){
+                                HStack{
+                                    Text("PC").padding(.trailing, 14)
+                                    Text("Playstation")
+                                }
+                            }
+                        }.padding(.bottom, 12)
+                    }.padding(.all, 12).frame(maxWidth: .infinity).background(SwiftUI.Color("TabBarColor")).cornerRadius(12)
                 }.padding(EdgeInsets(top: 24, leading: 23, bottom: 23, trailing: 24))
             }.foregroundColor(.white).background(SwiftUI.Color("BackgroundColor"))
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
