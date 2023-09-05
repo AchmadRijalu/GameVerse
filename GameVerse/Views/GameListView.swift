@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Alamofire
+import SDWebImageSwiftUI
 
 struct GameListView: View {
     init() {
@@ -17,13 +19,29 @@ struct GameListView: View {
     @State var searchText = ""
     private  var sharedMethod: SharedMethods = SharedMethods()
     @ObservedObject var gameListViewModel = GameListviewModel()
+    @ObservedObject var gameDetailViewModel: GameDetailViewModel = GameDetailViewModel()
+    var searchResult: [Result] {
+        if searchText.isEmpty {
+            return gameListViewModel.gameListResult
+        }
+        else {
+            return gameListViewModel.gameListResult.filter {
+                $0.name.contains(searchText)
+            }
+        }
+    }
     var body: some View {VStack { NavigationStack { ScrollView {
         HStack {
             Text("Featured").font(.system(.title2).bold())
             Spacer()
         }.foregroundColor(.white)
-        ForEach(gameListViewModel.gameListResult, id: \.id) { game in
-            NavigationLink(destination: GameDetailView()) {
+        if gameListViewModel.isLoading {
+            ActivityIndicator(.constant(true), style: .large).foregroundColor(.white)
+                .frame(width: 50, height: 50)
+                .padding()
+        }
+        ForEach(searchResult, id: \.id) { game in
+            NavigationLink(destination: GameDetailView(gameId: game.id, gameDetailViewModel: gameDetailViewModel)) {
                 GameListItem(image: game.backgroundImage, title: game.name, released: game.released, rating: game.rating, genres: game.tags)
             }
         }

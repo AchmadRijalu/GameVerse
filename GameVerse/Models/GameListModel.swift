@@ -6,7 +6,7 @@
 import Foundation
 
 // MARK: - GameListModel
-struct GameListModel: Codable{
+struct GameListModel: Codable {
     let count: Int
     let next: String
     let previous: JSONNull?

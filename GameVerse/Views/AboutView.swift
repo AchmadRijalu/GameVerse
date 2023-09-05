@@ -12,7 +12,6 @@ struct AboutView: View {
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(.white)]
             UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(.white)]
             UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
-            print("halo")
         }
     @Environment(\.presentationMode) var presentationMode
     @State private var showWebView = false

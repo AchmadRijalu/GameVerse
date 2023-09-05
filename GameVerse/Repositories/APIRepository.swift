@@ -10,12 +10,29 @@ import Combine
 import Alamofire
 protocol APIRepositoryProtocol {
     func fetchGameList() -> AnyPublisher<DataResponse<GameListModel, NetworkError>, Never>
+    func fetchGameDetail(_ id: Int) -> AnyPublisher<DataResponse<GameDetailModel, NetworkError>, Never>
 }
 class APIRepository {
     static let shared: APIRepositoryProtocol = APIRepository()
     private init(){}
 }
 extension APIRepository: APIRepositoryProtocol {
+    //MARK: - GET THE GAME DETAIL API
+    func fetchGameDetail(_ id: Int) -> AnyPublisher<DataResponse<GameDetailModel, NetworkError>, Never> {
+        let key = "b1494a83929f42e48dfed97ef6f5c956"
+        let url = URL(string: "https://api.rawg.io/api/games/\(id)?key=\(key)")!
+        return AF.request(url, method: .get, parameters: nil, headers: [:]).validate().publishDecodable(type: GameDetailModel.self).map {
+            response in response.mapError {
+                error in
+                let backendError = response.data.flatMap {
+                    try? JSONDecoder().decode(BackendError.self, from: $0)
+                }
+                return NetworkError(initialError: error, backendError: backendError)
+            }
+        }.receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    //MARK: - GET THE GAME LIST API
     func fetchGameList() -> AnyPublisher<DataResponse<GameListModel, NetworkError>, Never> {
         let key = "b1494a83929f42e48dfed97ef6f5c956"
         let url = URL(string: "https://api.rawg.io/api/games?key=\(key)")!
@@ -31,3 +48,20 @@ extension APIRepository: APIRepositoryProtocol {
             .eraseToAnyPublisher()
     }
 }
+
+//class DetailRestaurantAPIRepository {
+//    static let shared = DetailRestaurantAPIRepository()
+//    func fetchGameDetail(withID id: String, completion: @escaping (Result<GameDetailModel, Error>) -> Void) {
+//        let key = "b1494a83929f42e48dfed97ef6f5c956"
+//        AF.request("https://api.rawg.io/api/games/\(Int(id))?key=\(key)")
+//            .validate()
+//            .responseDecodable(of: GameDetailModel.self) { response in
+//                switch response.result {
+//                case .success(let data):
+//                    completion(.success(data))
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                }
+//            }
+//    }
+//}
