@@ -40,11 +40,18 @@ struct GameListView: View {
                 .frame(width: 50, height: 50)
                 .padding()
         }
-        ForEach(searchResult, id: \.id) { game in
-            NavigationLink(destination: GameDetailView(gameId: game.id, gameDetailViewModel: gameDetailViewModel)) {
-                GameListItem(image: game.backgroundImage, title: game.name, released: game.released, rating: game.rating, genres: game.tags)
+        else{
+            if gameListViewModel.gameListResult.isEmpty {
+                Text("No data available.")
+            } else {
+                ForEach(searchResult, id: \.id) { game in
+                    NavigationLink(destination: GameDetailView(gameId: game.id, gameDetailViewModel: gameDetailViewModel)) {
+                        GameListItem(image: game.backgroundImage, title: game.name, released: game.released, rating: game.rating, genres: game.tags)
+                    }
+                }
             }
         }
+        
     }.padding(.all).background(SwiftUI.Color("BackgroundColor"))
             .searchable(text: $searchText)
             .navigationTitle("Game List")
