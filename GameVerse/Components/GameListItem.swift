@@ -6,30 +6,36 @@
 //
 
 import SwiftUI
-
+import SDWebImageSwiftUI
 struct GameListItem: View {
+    var image: String
+    var title: String
+    var released: String
+    var rating: Double
+    var genres: [Genre]
     var body: some View {
-        VStack {VStack {HStack { GeometryReader{ geo in
-            Image("imageExample").resizable().cornerRadius(8)
-        }.padding(.trailing, 16)
+        VStack {VStack {HStack { GeometryReader { geo in
+            WebImage(url: URL(string: image)).resizable().scaledToFit().cornerRadius(8)
+        }.padding(.trailing, 12)
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Resident Evil 4")
+                    Text("\(title)")
                     Spacer()
                 }.padding(.bottom, 6)
-                HStack { HStack{
-                    Image(systemName: "star.leadinghalf.filled").foregroundColor(SwiftUI.Color("SecondaryColor"))
-                    Text("4.5")
-                }.padding(.trailing, 28)
-                    HStack{
+                HStack {
+                    HStack {
+                        Image(systemName: "star.leadinghalf.filled").foregroundColor(SwiftUI.Color("SecondaryColor"))
+                        Text("\(String(rating))").font(.caption2).bold()
+                    }.padding(.trailing, 12)
+                    HStack {
                         Image(systemName: "calendar").foregroundColor(SwiftUI.Color("SecondaryColor"))
-                        Text("4.5")
+                        Text("\(released)").font(.caption2).bold()
                     }
                 }.padding(.bottom, 11)
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10){
-                        ForEach(0..<6) {_ in
-                            Text("Item")
+                    HStack(spacing: 10) {
+                        ForEach(genres, id: \.id) { genre in
+                            Text("\(genre.name)").font(.callout)
                         }
                     }
                 }
@@ -43,6 +49,6 @@ struct GameListItem: View {
 
 struct GameListItem_Previews: PreviewProvider {
     static var previews: some View {
-        GameListItem()
+        GameListItem(image: "", title: "", released: "", rating: 0, genres: [])
     }
 }

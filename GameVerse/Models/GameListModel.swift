@@ -6,7 +6,7 @@
 import Foundation
 
 // MARK: - GameListModel
-struct GameListModel: Codable {
+struct GameListModel: Codable{
     let count: Int
     let next: String
     let previous: JSONNull?
@@ -16,7 +16,6 @@ struct GameListModel: Codable {
     let description: String
     let filters: Filters
     let nofollowCollections: [String]
-
     enum CodingKeys: String, CodingKey {
         case count, next, previous, results
         case seoTitle = "seo_title"
@@ -27,12 +26,10 @@ struct GameListModel: Codable {
         case nofollowCollections = "nofollow_collections"
     }
 }
-
 // MARK: - Filters
 struct Filters: Codable {
     let years: [FiltersYear]
 }
-
 // MARK: - FiltersYear
 struct FiltersYear: Codable {
     let from, to: Int
@@ -73,7 +70,7 @@ struct Result: Codable {
     let tags: [Genre]
     let esrbRating: EsrbRating
     let shortScreenshots: [ShortScreenshot]
-
+    
     enum CodingKeys: String, CodingKey {
         case id, slug, name, released, tba
         case backgroundImage = "background_image"
@@ -123,7 +120,7 @@ struct Genre: Codable {
     let imageBackground: String
     let domain: Domain?
     let language: Language?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, name, slug
         case gamesCount = "games_count"
@@ -158,7 +155,7 @@ struct PlatformElement: Codable {
     let platform: PlatformPlatform
     let releasedAt: String?
     let requirementsEn, requirementsRu: Requirements?
-
+    
     enum CodingKeys: String, CodingKey {
         case platform
         case releasedAt = "released_at"
@@ -175,7 +172,7 @@ struct PlatformPlatform: Codable {
     let yearStart: Int?
     let gamesCount: Int
     let imageBackground: String
-
+    
     enum CodingKeys: String, CodingKey {
         case id, name, slug, image
         case yearEnd = "year_end"
@@ -221,24 +218,24 @@ struct Store: Codable {
 // MARK: - Encode/decode helpers
 
 class JSONNull: Codable, Hashable {
-
+    
     public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
         return true
     }
-
+    
     public var hashValue: Int {
         return 0
     }
-
+    
     public init() {}
-
+    
     public required init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if !container.decodeNil() {
             throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
         }
     }
-
+    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encodeNil()

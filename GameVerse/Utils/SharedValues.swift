@@ -7,6 +7,6 @@
 
 import Foundation
 
-class SharedValue{
-    var apiKey:String = "b1494a83929f42e48dfed97ef6f5c956"
+class SharedValue {
+    var apiKey: String = "b1494a83929f42e48dfed97ef6f5c956"
 }

@@ -6,8 +6,28 @@
 //
 
 import Foundation
-
-
-class APIRepository{
-    
+import Combine
+import Alamofire
+protocol APIRepositoryProtocol {
+    func fetchGameList() -> AnyPublisher<DataResponse<GameListModel, NetworkError>, Never>
+}
+class APIRepository {
+    static let shared: APIRepositoryProtocol = APIRepository()
+    private init(){}
+}
+extension APIRepository: APIRepositoryProtocol {
+    func fetchGameList() -> AnyPublisher<DataResponse<GameListModel, NetworkError>, Never> {
+        let key = "b1494a83929f42e48dfed97ef6f5c956"
+        let url = URL(string: "https://api.rawg.io/api/games?key=\(key)")!
+        return AF.request(url, method: .get, parameters: nil, headers: [:]).validate().publishDecodable(type: GameListModel.self).map {
+            response in response.mapError {
+                error in
+                let backendError = response.data.flatMap {
+                    try? JSONDecoder().decode(BackendError.self, from: $0)
+                }
+                return NetworkError(initialError: error, backendError: backendError)
+            }
+        }.receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 }
