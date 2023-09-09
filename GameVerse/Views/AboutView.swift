@@ -9,12 +9,15 @@ import SwiftUI
 
 struct AboutView: View {
     init() {
-            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(.white)]
-            UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(.white)]
-            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
-        }
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(.white)]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(.white)]
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
+    }
     @Environment(\.presentationMode) var presentationMode
     @State private var showWebView = false
+    @State private var showEditAboutView = false
+    @EnvironmentObject var aboutusViewModel:AboutViewModel
+    var shareMethods = SharedMethods()
     var body: some View {
         NavigationStack {
             VStack {
@@ -24,10 +27,10 @@ struct AboutView: View {
                 }.padding(.top, 70)
                 VStack(spacing: 20) {
                     HStack {
-                        Text("Achmad Rijalu").font(.title2).fontWeight(.medium).foregroundColor(.white)
+                        Text(aboutusViewModel.aboutData.name).font(.title2).fontWeight(.medium).foregroundColor(.white)
                     }
                     HStack(alignment: .center) {
-                        Text("iOS Developer Intern at Apple Developer Academy @UC").font(.title3).fontWeight(.medium)
+                        Text(aboutusViewModel.aboutData.description).font(.title3).fontWeight(.medium)
                             .multilineTextAlignment(.center).foregroundColor(.white)
                     }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                     Spacer()
@@ -42,7 +45,7 @@ struct AboutView: View {
                     }
                     Button(action: {
                         showWebView.toggle()}
-                    ) { Text("Linkedin").fontWeight(.medium)
+                    ) { Text("Linkedinn").fontWeight(.medium)
                             .foregroundColor(.white)
                             .frame(width: UIScreen.main.bounds.width / 2) // Adjust padding as needed
                             .padding()
@@ -54,7 +57,7 @@ struct AboutView: View {
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(SwiftUI.Color("TabBarColor").edgesIgnoringSafeArea(.all))
                 .navigationTitle("About").navigationBarTitleDisplayMode(.automatic)
-                .fullScreenCover(isPresented: $showWebView) {
+                .sheet(isPresented: $showWebView) {
                     VStack {
                         VStack {
                             HStack {
@@ -67,9 +70,15 @@ struct AboutView: View {
                         }.frame(maxWidth: .infinity).background(SwiftUI.Color("PrimaryColor"))
                         WebViewRepresentable(url: URL(string: "https://www.linkedin.com/in/achmadrijalu/")!)
                     }
-//                    ZStack {
-//
-//                    }
+                }
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button("Edit") {
+                            showEditAboutView.toggle()
+                        }
+                    }
+                }.sheet(isPresented: $showEditAboutView) {
+                    EditAboutView(aboutViewModel: $aboutusViewModel.aboutData)
                 }
         }
     }

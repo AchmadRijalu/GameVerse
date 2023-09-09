@@ -9,10 +9,11 @@ import SwiftUI
 
 @main
 struct GameVerseApp: App {
+    @StateObject var aboutusViewModel: AboutViewModel = AboutViewModel()
     var body: some Scene {
         WindowGroup {
 //            ContentView()
-            SplashScreenView()
+            SplashScreenView().environmentObject(aboutusViewModel)
         }
     }
 }
