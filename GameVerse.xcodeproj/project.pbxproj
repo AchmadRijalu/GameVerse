@@ -145,8 +145,6 @@
 			children = (
 				77E3019A2AAD821600DFE2E7 /* FavoriteController.swift */,
 				77E301AD2AB13F2300DFE2E7 /* Favorite.xcdatamodeld */,
-				77E301992AAD81DA00DFE2E7 /* DatabaseControllers */,
-				7749FDAD2AAD5DAC004C6475 /* Database */,
 				77936B432AA61FBF000D9CAD /* Network */,
 				7760FCDE2A9F6D5F007FFB76 /* Components */,
 				77179DEC2A94F1A800D11F85 /* Utils */,
@@ -245,13 +243,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7749FDAD2AAD5DAC004C6475 /* Database */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Database;
-			sourceTree = "<group>";
-		};
 		7760FCDE2A9F6D5F007FFB76 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,13 +258,6 @@
 				77936B442AA61FD8000D9CAD /* NetworkError.swift */,
 			);
 			path = Network;
-			sourceTree = "<group>";
-		};
-		77E301992AAD81DA00DFE2E7 /* DatabaseControllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DatabaseControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

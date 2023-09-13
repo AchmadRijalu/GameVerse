@@ -22,12 +22,10 @@ class GameListviewModel: ObservableObject {
     }
     func getGameList() {
         isLoading = true
-        dataManager.fetchGameList().sink {
-            (dataResponse) in
+        dataManager.fetchGameList().sink {(dataResponse) in
             if dataResponse.error != nil {
                 self.createAlert(with: dataResponse.error!)
-            }
-            else {
+            } else {
                 self.gameListResult = dataResponse.value!.results
                 self.isLoading = false
             }

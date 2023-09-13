@@ -19,12 +19,10 @@ class GameDetailViewModel: ObservableObject {
     }
     func getGameDetail(id: Int) {
         isLoading = true
-        dataManager.fetchGameDetail(id).sink {
-            (dataResponse) in
+        dataManager.fetchGameDetail(id).sink {(dataResponse) in
             if dataResponse.error != nil {
                 self.createAlert(with: dataResponse.error!)
-            }
-            else {
+            } else {
                 //                self.gameListResult = dataResponse.value!.
                 self.gameDetail = dataResponse.value
                 self.isLoading = false
@@ -32,7 +30,9 @@ class GameDetailViewModel: ObservableObject {
         }.store(in: &cancellableSet)
     }
     func createAlert(with error: NetworkError) {
-        gameDetailLoadingError = error.backendError == nil ? error.initialError.localizedDescription : error.backendError!.message
+        gameDetailLoadingError = error.backendError == nil ?
+        error.initialError.localizedDescription :
+        error.backendError!.message
         self.showAlert = true
     }
 }

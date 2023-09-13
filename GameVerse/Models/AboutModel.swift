@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct AboutModel: Codable{
+struct AboutModel: Codable {
     var name: String
     var description: String
 }
-

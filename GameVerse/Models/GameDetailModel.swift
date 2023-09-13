@@ -41,7 +41,6 @@ struct GameDetailModel: Codable, Identifiable {
     var esrbRating: EsrbRating
     var clip: JSONNull?
     var descriptionRaw: String
-    
     enum CodingKeys: String, CodingKey {
         case id, slug, name
         case nameOriginal = "name_original"
@@ -125,7 +124,6 @@ struct PlatformElementDetail: Codable {
     var platform: PlatformPlatformDetail
     var releasedAt: String
     var requirements: RequirementsDetail
-    
     enum CodingKeys: String, CodingKey {
         case platform
         case releasedAt = "released_at"

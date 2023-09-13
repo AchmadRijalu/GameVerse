@@ -20,8 +20,10 @@ struct EditAboutView: View {
                     Text("Description").font(.title3).bold().padding(.leading, 20)
                     Spacer()
                 }.padding(.bottom, 4)
-                TextEditor(text: $aboutViewModel.description).frame(height: 100).foregroundColor(SwiftUI.Color.white) .scrollContentBackground(.hidden) // <- Hide it
-                    .background(SwiftUI.Color("TabBarColor")).padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
+                TextEditor(text: $aboutViewModel.description).frame(height: 100)
+                    .foregroundColor(SwiftUI.Color.white) .scrollContentBackground(.hidden)
+                    .background(SwiftUI.Color("TabBarColor"))
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
                 Spacer()
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
                 .navigationTitle("Edit Profile About")
@@ -36,7 +38,6 @@ struct EditAboutView: View {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         Button("Cancel") {
                             presentationMode.wrappedValue.dismiss()
-                            
                         }
                     }
                 }

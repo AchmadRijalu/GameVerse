@@ -32,7 +32,6 @@ struct GameDetailView: View {
     }
     private func toggleFavorite() {
             if isFavorite {
-                print("masuk sini")
                 // Remove the game as a favorite
                 let fetchRequest: NSFetchRequest<FavoriteCoreData> = FavoriteCoreData.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "gameId == %d", gameId)
@@ -41,15 +40,12 @@ struct GameDetailView: View {
                     let results = try data.fetch(fetchRequest)
                     for result in results {
                         data.delete(result)
-                        print("delete \(result.gameId)")
                     }
                     try data.save()
                 } catch {
                     print("Error removing favorite: \(error.localizedDescription)")
                 }
             } else {
-                print("masuk sana")
-                // Add the game as a favorite
                 let favorite = FavoriteCoreData(context: data)
                 favorite.gameId = Int16(gameId)
                 favorite.title = gameTitle
