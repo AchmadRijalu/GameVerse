@@ -11,11 +11,24 @@ import CoreData
 struct GameFavoritesView: View {
     @State var searchText: String = ""
     @FetchRequest(sortDescriptors: []) var favorites: FetchedResults <FavoriteCoreData>
-    //    var favoriteList: [String] = [""]
     @ObservedObject var gameDetailViewModel: GameDetailViewModel = GameDetailViewModel()
+    
+    var filteredFavorites: [FavoriteCoreData] {
+            if searchText.isEmpty {
+                return Array(favorites)
+            } else {
+                return favorites.filter { fav in
+                    // You can modify the filtering criteria here to match your needs
+                    let title = fav.title ?? ""
+                    let genres = fav.genres ?? []
+                    return title.localizedCaseInsensitiveContains(searchText) ||
+                           genres.joined(separator: " ").localizedCaseInsensitiveContains(searchText)
+                }
+            }
+        }
     var body: some View {
         NavigationStack {
-            if favorites.count == 0 {
+            if filteredFavorites.count == 0 {
                 VStack {
                     Spacer()
                     HStack {
@@ -27,7 +40,7 @@ struct GameFavoritesView: View {
                 .navigationTitle("Favorites")
             } else {
                 ScrollView {
-                    ForEach(favorites, id: \.id) { fav in
+                    ForEach(filteredFavorites, id: \.id) { fav in
                         NavigationLink(destination:
                                         GameDetailView(gameId: Int(fav.gameId), gameTitle: fav.title ?? "",
                                         gameRating: fav.rating, gameReleased: fav.released ?? "",
