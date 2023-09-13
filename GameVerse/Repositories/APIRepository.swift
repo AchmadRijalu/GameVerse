@@ -48,20 +48,3 @@ extension APIRepository: APIRepositoryProtocol {
             .eraseToAnyPublisher()
     }
 }
-
-//class DetailRestaurantAPIRepository {
-//    static let shared = DetailRestaurantAPIRepository()
-//    func fetchGameDetail(withID id: String, completion: @escaping (Result<GameDetailModel, Error>) -> Void) {
-//        let key = "b1494a83929f42e48dfed97ef6f5c956"
-//        AF.request("https://api.rawg.io/api/games/\(Int(id))?key=\(key)")
-//            .validate()
-//            .responseDecodable(of: GameDetailModel.self) { response in
-//                switch response.result {
-//                case .success(let data):
-//                    completion(.success(data))
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                }
-//            }
-//    }
-//}

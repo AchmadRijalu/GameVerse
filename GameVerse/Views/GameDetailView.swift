@@ -7,10 +7,63 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-
+import CoreData
 struct GameDetailView: View {
     var gameId: Int
+    var gameTitle: String
+    var gameRating: Double
+    var gameReleased: String
+    var gameGenres: [Genre]?
+    var gameBackground: String
     @ObservedObject var gameDetailViewModel: GameDetailViewModel
+    @State private var genreNames: [String] = []
+    @State private var isFavorite: Bool = false
+    @Environment(\.managedObjectContext) var data
+    private func isGameFavorite(gameId: Int) -> Bool {
+        let fetchRequest: NSFetchRequest<FavoriteCoreData> = FavoriteCoreData.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "gameId == %d", gameId)
+        do {
+            let results = try data.fetch(fetchRequest)
+            return !results.isEmpty
+        } catch {
+            print("Error fetching favorites: \(error.localizedDescription)")
+            return false
+        }
+    }
+    private func toggleFavorite() {
+            if isFavorite {
+                print("masuk sini")
+                // Remove the game as a favorite
+                let fetchRequest: NSFetchRequest<FavoriteCoreData> = FavoriteCoreData.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "gameId == %d", gameId)
+
+                do {
+                    let results = try data.fetch(fetchRequest)
+                    for result in results {
+                        data.delete(result)
+                        print("delete \(result.gameId)")
+                    }
+                    try data.save()
+                } catch {
+                    print("Error removing favorite: \(error.localizedDescription)")
+                }
+            } else {
+                print("masuk sana")
+                // Add the game as a favorite
+                let favorite = FavoriteCoreData(context: data)
+                favorite.gameId = Int16(gameId)
+                favorite.title = gameTitle
+                favorite.genres = genreNames
+                favorite.backgroundImage = gameBackground
+                favorite.rating = gameRating
+                favorite.released = gameReleased
+                do {
+                    try data.save()
+                } catch {
+                    print("Error saving favorite: \(error.localizedDescription)")
+                }
+            }
+        }
     var body: some View {
         VStack {
             ScrollView {
@@ -26,12 +79,12 @@ struct GameDetailView: View {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     if gameDetailViewModel.gameDetail == nil {
                         Text("No data available.")
                     } else {
-                        WebImage(url: URL(string: gameDetailViewModel.gameDetail?.backgroundImage ?? "")).resizable().scaledToFit().cornerRadius(8)
+                        WebImage(url: URL(string:
+                                            gameDetailViewModel.gameDetail?.backgroundImage ?? "")).resizable().scaledToFit().cornerRadius(8)
                         VStack {
                             HStack {
                                 Text(gameDetailViewModel.gameDetail?.name ?? "\(String(gameId))").font(.system(.title).bold())
@@ -95,7 +148,6 @@ struct GameDetailView: View {
                                                     // Add any other platform information you want to display
                                                 }
                                             }
-                                            
                                         }
                                     }
                                 }.padding(.bottom, 32)
@@ -123,7 +175,6 @@ struct GameDetailView: View {
                                                 Text(tag.name).padding(.trailing, 14)
                                             }
                                             Text("PC").padding(.trailing, 14)
-                                            
                                         }
                                     }
                                 }.padding(.bottom, 12)
@@ -131,18 +182,38 @@ struct GameDetailView: View {
                                 .cornerRadius(12)
                         }.padding(EdgeInsets(top: 24, leading: 23, bottom: 23, trailing: 24))
                     }
-                    
                 }
-                
             }.foregroundColor(.white).background(SwiftUI.Color("BackgroundColor"))
         }.onAppear {
             gameDetailViewModel.getGameDetail(id: gameId)
-        }.frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-struct GameDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameDetailView(gameId: 0, gameDetailViewModel: GameDetailViewModel())
+            if let genres = gameGenres {
+                // Map the Genre objects to an array of genre names as strings
+                genreNames = genres.map { $0.name }
+                
+            }
+            isFavorite = isGameFavorite(gameId: gameId)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity).toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack {
+                    if isFavorite {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(SwiftUI.Color("SecondaryColor")).onTapGesture {
+                                toggleFavorite()
+                                print("asas")
+                                isFavorite.toggle()
+                            }
+                    } else {
+                        Image(systemName: "heart")
+                            .foregroundColor(SwiftUI.Color("SecondaryColor"))
+                            .onTapGesture {
+                                toggleFavorite()
+                                print("asas")
+                                isFavorite.toggle()
+                            }
+                    }
+                }
+            }
+        }
     }
 }

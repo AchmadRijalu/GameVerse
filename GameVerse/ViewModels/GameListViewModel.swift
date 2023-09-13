@@ -34,7 +34,8 @@ class GameListviewModel: ObservableObject {
         }.store(in: &cancellableSet)
     }
     func createAlert(with error: NetworkError) {
-        gameListLoadingError = error.backendError == nil ? error.initialError.localizedDescription : error.backendError!.message
+        gameListLoadingError = error.backendError == nil ? error.initialError.localizedDescription :
+        error.backendError!.message
         self.showAlert = true
     }
 }

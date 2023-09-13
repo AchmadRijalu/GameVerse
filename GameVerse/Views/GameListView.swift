@@ -23,8 +23,7 @@ struct GameListView: View {
     var searchResult: [Result] {
         if searchText.isEmpty {
             return gameListViewModel.gameListResult
-        }
-        else {
+        } else {
             return gameListViewModel.gameListResult.filter {
                 $0.name.contains(searchText)
             }
@@ -39,14 +38,19 @@ struct GameListView: View {
             ActivityIndicator(.constant(true), style: .large).foregroundColor(.white)
                 .frame(width: 50, height: 50)
                 .padding()
-        }
-        else {
+        } else {
             if gameListViewModel.gameListResult.isEmpty {
                 Text("No data available.")
             } else {
                 ForEach(searchResult, id: \.id) { game in
-                    NavigationLink(destination: GameDetailView(gameId: game.id, gameDetailViewModel: gameDetailViewModel)) {
-                        GameListItem(image: game.backgroundImage, title: game.name, released: game.released, rating: game.rating, genres: game.tags)
+                    NavigationLink(destination:
+                        GameDetailView(gameId: game.id, gameTitle: game.name,
+                        gameRating: game.rating, gameReleased: game.released,
+                                       gameGenres : game.tags, gameBackground: game.backgroundImage,
+                        gameDetailViewModel: gameDetailViewModel)) {
+                        GameListItem(image: game.backgroundImage,
+                                     title: game.name, released: game.released,
+                                     rating: game.rating, genres: game.tags)
                     }
                 }
             }

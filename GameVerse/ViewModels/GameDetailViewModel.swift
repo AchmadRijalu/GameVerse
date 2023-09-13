@@ -21,7 +21,6 @@ class GameDetailViewModel: ObservableObject {
         isLoading = true
         dataManager.fetchGameDetail(id).sink {
             (dataResponse) in
-            print(dataResponse)
             if dataResponse.error != nil {
                 self.createAlert(with: dataResponse.error!)
             }
